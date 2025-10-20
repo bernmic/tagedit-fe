@@ -1,0 +1,97 @@
+.songs-container {
+  margin: 20px;
+  padding-left: 0.5rem;
+
+  @media screen and (min-width: 600px) {
+    padding-left: 1rem;
+  }
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+th,
+td {
+  overflow: hidden;
+  width: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+tr.mat-mdc-row:hover {
+  background-color: var(--mat-sys-on-primary);
+}
+
+.header-container {
+  white-space: nowrap;
+}
+
+span.header-item {
+  display: inline-block;
+  width: 80%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.mat-column-file {
+  flex: 0 0 20%;
+  width: 20%;
+}
+
+.mat-column-title {
+  flex: 0 0 20%;
+  width: 20%;
+}
+
+.mat-column-artist {
+  flex: 0 0 15%;
+  width: 15%;
+}
+
+.mat-column-album {
+  flex: 0 0 15%;
+  width: 15%;
+}
+
+.mat-column-genre {
+  flex: 0 0 10%;
+  width: 10%;
+}
+
+.mat-column-year {
+  flex: 0 0 5%;
+  width: 5%;
+}
+
+.mat-column-track {
+  flex: 0 0 5%;
+  width: 5%;
+}
+
+.mat-column-select {
+  flex: 0 0 3%;
+  width: 3%;
+}
+
+.mat-column-created {
+  flex: 0 0 6%;
+  width: 6%;
+}
+
+.mat-column-download {
+  flex: 0 0 2%;
+  width: 2%;
+}
+
+.table-link {
+  text-decoration: none;
+  color: var(--mat-sys-on-background);
+}
+
+.mat-mdc-row {
+  height: 10px !important;
+}

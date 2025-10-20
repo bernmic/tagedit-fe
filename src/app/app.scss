@@ -1,0 +1,73 @@
+@use '@angular/material' as mat;
+
+.toolbar {
+  @include mat.toolbar-overrides((container-background-color: var(--mat-sys-primary),
+    container-text-color: var(--mat-sys-on-primary),
+  ));
+  @include mat.icon-overrides((color: var(--mat-sys-on-primary),
+  ));
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+mat-drawer {
+  padding-top: 3.5rem;
+
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+}
+
+mat-drawer-content {
+  padding-top: 3.5rem;
+
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+}
+
+a[role=listitem] {
+  border-radius: 0%;
+}
+
+.content {
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+}
+
+.main-container {
+  width: 100%;
+  height: 100dvh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  //align-items: center;
+  //justify-content: center;
+}
+
+.sidenav {
+  //padding: 20px;
+  border-right: 2px solid var(--mat-sys-on-background);
+  width: 250px;
+  border-radius: 0%;
+}
+
+.version-display {
+  padding-top: 400px;
+  padding-left: 20px;
+}

@@ -1,0 +1,17 @@
+<mat-nav-list>
+  @if (directoriesService.currentDir() !== "") {
+    <a mat-list-item role="listitem" (click)="dirClicked('..')">
+        <span class="entry">
+          <span>..</span>
+        </span>
+    </a>
+
+  }
+  @for (dir of directoryList.directories; track dir) {
+    <a mat-list-item role="listitem" (click)="dirClicked(dir)">
+        <span class="entry">
+          <span>{{ dir }}</span>
+        </span>
+    </a>
+  }
+</mat-nav-list>
