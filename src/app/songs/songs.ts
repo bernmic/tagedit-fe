@@ -10,11 +10,13 @@ import {DirectoriesService} from '../directories/directories.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatButtonModule} from '@angular/material/button';
-import {MatToolbar} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {LocalStorageService} from '../common/localstorage.service';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import {SongEditDialog} from './song-edit';
+import {MatDialog} from '@angular/material/dialog';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-songs',
@@ -27,7 +29,7 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
     MatMenuModule,
     MatSortModule,
     MatTableModule,
-    MatToolbar,
+    MatToolbarModule,
     MatTooltipModule,
   ],
   templateUrl: './songs.html',
@@ -42,6 +44,7 @@ export class Songs implements OnInit {
   protected displayedColumns: string[] = ["select", "file", "title", "artist", "album", "track", "genre", "year"];
   protected dataSource = new MatTableDataSource<Song>(this.songList.songs);
   protected selection = new SelectionModel<Song>(true, []);
+  protected readonly dialog = inject(MatDialog);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor() {
@@ -90,7 +93,10 @@ export class Songs implements OnInit {
   }
 
   editFile(row?: Song) {
+    if (row === undefined)
+      return;
     console.log("Edit file " + row?.path);
+    this.openSongEditDialog(row);
   }
 
   editSelected(): void {
@@ -133,6 +139,20 @@ export class Songs implements OnInit {
       console.log(`${item.path} --> ${tpl} (changed=${item.changed})`);
       item.path = tpl;
     })
+  }
+
+  openSongEditDialog(song: Song): void {
+    const dialogRef = this.dialog.open(SongEditDialog, {
+      data: {song: song},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        console.log('The dialog was closed with result ');
+        console.log(result);
+      }
+    });
   }
 
   @HostListener('window:keydown.control.a', ['$event'])
