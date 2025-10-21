@@ -1,6 +1,8 @@
 <div class="form-container">
-  <span mat-dialog-title>{{extractFilename(data.song.path)}}</span>
+  <span mat-dialog-title class="dialog-title">{{extractFilename(data.song.path)}}</span>
+  <mat-divider></mat-divider>
   <mat-dialog-content>
+    <div class="left-container">
     <mat-form-field class="fullwidth">
       <mat-label>Title</mat-label>
       <input matInput [(ngModel)]="song().title" />
@@ -25,8 +27,36 @@
       <mat-label>Genre</mat-label>
       <input matInput [(ngModel)]="song().genre" />
     </mat-form-field>
+    <mat-form-field class="fullwidth">
+      <mat-label>Composer</mat-label>
+      <input matInput [(ngModel)]="song().composer" />
+    </mat-form-field>
+    <mat-form-field class="fullwidth">
+      <mat-label>Comment</mat-label>
+      <textarea matInput [(ngModel)]="song().comment"></textarea>
+    </mat-form-field>
+    <mat-form-field class="fullwidth">
+      <mat-label>Lyrics</mat-label>
+      <textarea matInput [(ngModel)]="song().lyrics"></textarea>
+    </mat-form-field>
+    </div>
+    <div class="right-container">
+      @if (cover) {
+        <img [src]="cover" alt="cover" width="300px">
+      } @else {
+        <img src="no_cover.png" alt="no cover available" width="300px"/>
+      }
+      <hr/>
+      Runtime {{song().duration | duration}}
+      <hr/>
+      Bitrate {{song().bitrate}} kbit/s ({{song().bitrate_mode}})
+      <hr/>
+      Samplerate {{song().samplerate}} Hz
+      <hr/>
+      {{song().format}} {{song().file_type}} {{song().stereo_mode}}
+    </div>
   </mat-dialog-content>
-  <mat-dialog-actions>
+<mat-dialog-actions>
     <button matButton (click)="onCancelClick()">Cancel</button>
     <button matButton [mat-dialog-close]="song()" cdkFocusInitial>Ok</button>
   </mat-dialog-actions>

@@ -21,6 +21,14 @@ export class Song {
     public cover: Cover,
     public changed: boolean,
     public new_name: string,
+    // readonly attributes
+    public file_type: string,
+    public format: string,
+    public bitrate: number,
+    public samplerate: number,
+    public duration: number,
+    public stereo_mode: string,
+    public bitrate_mode: string,
   ) {}
 }
 

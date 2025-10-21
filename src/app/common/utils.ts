@@ -11,4 +11,8 @@ export class utils {
   static extractExtension(path: string) {
     return path.substring(path.lastIndexOf("."));
   }
+
+  static pad(num: number, size: number): string {
+    return (""+num).padStart(size, '0');
+  }
 }

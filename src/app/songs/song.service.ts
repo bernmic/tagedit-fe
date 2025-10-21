@@ -11,6 +11,6 @@ export class SongsService {
   private readonly http: HttpClient = inject(HttpClient);
 
   getSongList(parent: string): Observable<SongList> {
-    return this.http.get<SongList>(environment.apiUrl + "/songs?parent=" + encodeURI(parent));
+    return this.http.get<SongList>(environment.apiUrl + "/songs?parent=" + encodeURI(parent) + "&cover=true");
   }
 }

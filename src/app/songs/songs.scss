@@ -95,3 +95,11 @@ span.header-item {
 .mat-mdc-row {
   height: 10px !important;
 }
+
+.changed-true {
+  background-color: #ccc;
+}
+
+.changed-true.dark {
+  background-color: #333;
+}

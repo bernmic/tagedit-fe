@@ -17,6 +17,7 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
 import {SongEditDialog} from './song-edit';
 import {MatDialog} from '@angular/material/dialog';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {utils} from '../common/utils';
 
 @Component({
   selector: 'app-songs',
@@ -132,18 +133,19 @@ export class Songs implements OnInit {
       tpl = tpl.replace("{title}", item.title);
       tpl = tpl.replace("{title}", item.title);
       tpl = tpl.replace("{year}", item.year);
-      let path = item.path.substring(0, item.path.lastIndexOf("/"));
-      let ext = item.path.substring(item.path.lastIndexOf("."));
+      let path = this.removeFilename(item.path);
+      let ext = this.extractExtension(item.path);
       tpl = path + "/" + tpl + ext;
-      item.changed = (tpl !== item.path);
-      console.log(`${item.path} --> ${tpl} (changed=${item.changed})`);
-      item.path = tpl;
+      if (tpl !== item.path) {
+        item.changed = true;
+        item.new_name = tpl;
+      }
     })
   }
 
   openSongEditDialog(song: Song): void {
     const dialogRef = this.dialog.open(SongEditDialog, {
-      data: {song: song},
+      data: {song: song}, width: '80vw', minWidth: '80vw'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -160,4 +162,9 @@ export class Songs implements OnInit {
     event.preventDefault();
     this.selection = new SelectionModel<Song>(true, this.songList.songs);
   }
+
+  extractFilename = utils.extractFilename;
+  removeFilename = utils.removeFilename;
+  extractExtension = utils.extractExtension;
+  pad = utils.pad;
 }
