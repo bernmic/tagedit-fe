@@ -1,4 +1,6 @@
-# TageditFe
+# TagEditor (Frondend)
+
+Simple editor for ID3V2 tags in mp3 audio files. Backend can be found here: https://github.com/bernmic/tagedit
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.6.
 
