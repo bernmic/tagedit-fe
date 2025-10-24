@@ -13,4 +13,8 @@ export class SongsService {
   getSongList(parent: string): Observable<SongList> {
     return this.http.get<SongList>(environment.apiUrl + "/songs?parent=" + encodeURI(parent) + "&cover=true");
   }
+
+  updateSongList(songList: SongList): Observable<any> {
+    return this.http.patch<any>(environment.apiUrl + "/songs", songList);
+  }
 }

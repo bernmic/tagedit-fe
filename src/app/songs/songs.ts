@@ -18,6 +18,8 @@ import {SongEditDialog} from './song-edit';
 import {MatDialog} from '@angular/material/dialog';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {utils} from '../common/utils';
+import {catchError} from 'rxjs';
+import {BreadcrumbComponent} from '../common/breadcrumb';
 
 @Component({
   selector: 'app-songs',
@@ -32,6 +34,7 @@ import {utils} from '../common/utils';
     MatTableModule,
     MatToolbarModule,
     MatTooltipModule,
+    BreadcrumbComponent,
   ],
   templateUrl: './songs.html',
   styleUrl: './songs.scss'
@@ -59,12 +62,14 @@ export class Songs implements OnInit {
     let c = this.localStorageService.get('currentDir');
     if (c)
       this.directoriesService.currentDir.set(c);
-    this.fetchSongs();
   }
 
   fetchSongs(): void {
     this.songsService.getSongList(this.directoriesService.currentDir()).subscribe(sl => {
       this.songList = sl;
+      sl.songs.forEach(song => {
+        song.displayPath = this.extractFilename(song.path);
+      });
       this.dataSource = new MatTableDataSource(this.songList.songs);
       this.selection = new SelectionModel<Song>(true, []);
       this.dataSource.sort = this.sort;
@@ -106,6 +111,7 @@ export class Songs implements OnInit {
   }
 
   numerateSelected(): void {
+    this.dataSource.sortData(this.selection.selected, this.sort);
     let trackNo = 1;
     this.selection.selected.forEach((item) => {
       item.track = (""+trackNo++).padStart(2, '0');
@@ -144,6 +150,7 @@ export class Songs implements OnInit {
   }
 
   openSongEditDialog(song: Song): void {
+    let clone = structuredClone<Song>(song);
     const dialogRef = this.dialog.open(SongEditDialog, {
       data: {song: song}, width: '80vw', minWidth: '80vw'
     });
@@ -151,10 +158,20 @@ export class Songs implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        if (!this.compareSongs(song, clone))
+          song.changed = true;
         console.log('The dialog was closed with result ');
         console.log(result);
       }
     });
+  }
+
+  compareSongs(song1: Song, song2: Song): boolean {
+    return JSON.stringify(song1) === JSON.stringify(song2);
+  }
+
+  saveSongs(): void {
+    this.songsService.updateSongList(this.songList).subscribe(() => console.log('Successfully updated'));
   }
 
   @HostListener('window:keydown.control.a', ['$event'])

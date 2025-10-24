@@ -1,0 +1,4 @@
+<a matButton (click)="onClick(-1)">root</a>
+@for (crumb of crumbs; track crumb) {
+  /<a matButton (click)="onClick($index)">{{crumb}}</a>
+}

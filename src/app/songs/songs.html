@@ -1,8 +1,8 @@
 <div class="songs-container">
   <mat-toolbar color="primary" class="toolbar">
-    <a matButton>{{directoriesService.currentDir()}}</a>
+    <breadcrumb [items]="directoriesService.currentDir()" divider="/"></breadcrumb>
     <span class="toolbar-spacer"></span>
-    <button matIconButton aria-label="Save icon" matTooltip="Save all changes">
+    <button matIconButton aria-label="Save icon" matTooltip="Save all changes" (click)="saveSongs()">
       <mat-icon>save</mat-icon>
     </button>
     <button matIconButton aria-label="Edit icon" matTooltip="Edit selected files" (click)="editSelected()" disabled="{{this.selection.selected.length === 0}}">
@@ -41,7 +41,7 @@
       <th mat-header-cell *matHeaderCellDef class="header-container" mat-sort-header sortActionDescription="sort by path">
         <span class="header-item">File </span>
       </th>
-      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.path.split('\\').pop().split('/').pop()}}</td>
+      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.displayPath}}</td>
     </ng-container>
 
     <ng-container matColumnDef="title">

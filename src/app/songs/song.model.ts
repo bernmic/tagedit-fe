@@ -29,6 +29,8 @@ export class Song {
     public duration: number,
     public stereo_mode: string,
     public bitrate_mode: string,
+    // calculated attributes
+    public displayPath?: string,
   ) {}
 }
 
