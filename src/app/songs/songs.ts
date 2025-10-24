@@ -45,7 +45,7 @@ export class Songs implements OnInit {
   private readonly songsService: SongsService = inject(SongsService);
   protected readonly directoriesService: DirectoriesService = inject(DirectoriesService);
   protected songList: SongList = new SongList([], 0);
-  protected displayedColumns: string[] = ["select", "file", "title", "artist", "album", "track", "genre", "year"];
+  protected displayedColumns: string[] = ["select", "file", "title", "artist", "album", "track", "genre", "year", "tags"];
   protected dataSource = new MatTableDataSource<Song>(this.songList.songs);
   protected selection = new SelectionModel<Song>(true, []);
   protected readonly dialog = inject(MatDialog);
@@ -126,6 +126,24 @@ export class Songs implements OnInit {
     })
   }
 
+  removeid3v1(): void {
+    this.selection.selected.forEach((item) => {
+      if (item.has_id3_v1) {
+        item.remove_id3v1 = true;
+        item.changed = true;
+      }
+    })
+  }
+
+  removeid3v2(): void {
+    this.selection.selected.forEach((item) => {
+      if (item.has_id3_v2) {
+        item.remove_id3v2 = true;
+        item.changed = true;
+      }
+    })
+  }
+
   renameSelected(): void {
     this.selection.selected.forEach((item) => {
       // @ts-ignore
@@ -172,6 +190,19 @@ export class Songs implements OnInit {
 
   saveSongs(): void {
     this.songsService.updateSongList(this.songList).subscribe(() => console.log('Successfully updated'));
+  }
+
+  formatTags(song: Song): string {
+    if (song.has_id3_v1 && song.has_id3_v2) {
+      return "id3v1, id3v2";
+    }
+    if (song.has_id3_v1) {
+      return "id3v1";
+    }
+    if (song.has_id3_v2) {
+      return "id3v2";
+    }
+    return "-";
   }
 
   @HostListener('window:keydown.control.a', ['$event'])

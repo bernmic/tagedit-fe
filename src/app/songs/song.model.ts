@@ -19,8 +19,11 @@ export class Song {
     public comment: string,
     public lyrics: string,
     public cover: Cover,
+    // update only fields
     public changed: boolean,
     public new_name: string,
+    public remove_id3v1: boolean,
+    public remove_id3v2: boolean,
     // readonly attributes
     public file_type: string,
     public format: string,
@@ -29,6 +32,8 @@ export class Song {
     public duration: number,
     public stereo_mode: string,
     public bitrate_mode: string,
+    public has_id3_v2: boolean,
+    public has_id3_v1: boolean,
     // calculated attributes
     public displayPath?: string,
   ) {}
