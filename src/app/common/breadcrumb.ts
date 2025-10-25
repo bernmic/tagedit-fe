@@ -12,13 +12,17 @@ import {DirectoriesService} from '../directories/directories.service';
 })
 export class BreadcrumbComponent {
   private directoriesService: DirectoriesService = inject(DirectoriesService);
-
-  @Input({required: true}) items!: string;
-  @Input({required: true}) divider!: string;
   protected crumbs: string[] = [];
 
+  constructor() {
+    effect(() => {
+      console.log('breadcrumb changed to ' + this.directoriesService.currentDir());
+      this.ngOnInit();
+    });
+  }
   ngOnInit() {
-    this.items.split(this.divider).forEach(item => this.crumbs.push(item));
+    this.crumbs = [];
+    this.directoriesService.currentDir().split("/").forEach(item => this.crumbs.push(item));
   }
 
   onClick(idx: number) {
@@ -32,8 +36,13 @@ export class BreadcrumbComponent {
     let i: number;
     let dir = ""
     for (i  = 0; i <= idx; i++) {
-      dir += this.crumbs[idx][i] + "/";
+      dir += this.crumbs[i] + "/";
     }
+    console.log('----------------------------------------');
+    console.log(this.crumbs);
+    console.log(dir);
+    console.log(dir.slice(0, -1));
+    console.log('----------------------------------------');
     this.directoriesService.currentDir.set(dir.slice(0, -1));
   }
 }

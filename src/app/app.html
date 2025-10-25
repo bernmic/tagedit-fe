@@ -3,9 +3,9 @@
     <mat-icon>menu</mat-icon>
   </button>
   <a matButton>{{title()}}</a>
-  <button matButton [matMenuTriggerFor]="songsMenu" aria-label="songs menu">
+  <!--<button matButton [matMenuTriggerFor]="songsMenu" aria-label="songs menu">
     Song
-  </button>
+  </button>-->
   <span class="toolbar-spacer"></span>
   <button matIconButton aria-label="Invert colors icon" (click)="toggleTheme()">
     <mat-icon>invert_colors</mat-icon>
@@ -24,7 +24,7 @@
     <div class="version-display">
       <span>Version 0.1.0</span>
       <br />
-      <span>Backend 0.1.0</span>
+      <span>Backend {{ sysInfo?.version }}</span>
     </div>
   </mat-drawer>
 

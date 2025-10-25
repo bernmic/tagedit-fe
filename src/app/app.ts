@@ -9,6 +9,7 @@ import {MatListModule} from '@angular/material/list';
 import {CommonModule} from '@angular/common';
 import {ThemeService} from './common/theme.service';
 import {Directories} from './directories/directories';
+import {SysInfo, SysInfoService} from './common/sysinfo.service';
 
 @Component({
   selector: 'app-root',
@@ -29,11 +30,14 @@ import {Directories} from './directories/directories';
 export class App {
   protected readonly title = signal('TagEdit');
   private readonly themeService = inject(ThemeService);
+  private readonly sysInfoService: SysInfoService = inject(SysInfoService);
   private readonly router = inject(Router);
-
+  protected sysInfo: SysInfo | undefined = undefined
+  ;
   ngOnInit(): void {
     this.themeService.darkMode = window.matchMedia('(prefers-color-scheme)').matches;
     this.setColorMode();
+    this.sysInfoService.getSysInfo().subscribe(si => {this.sysInfo = si;});
   }
 
   setColorMode() {

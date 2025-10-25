@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, effect, inject} from '@angular/core';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {DirectoriesService} from './directories.service';
@@ -17,6 +17,12 @@ export class Directories {
   protected readonly directoriesService = inject(DirectoriesService)
   protected directoryList: DirectoryList = new DirectoryList([], 0);
 
+  constructor() {
+    effect(() => {
+      this.fetchDirs();
+    });
+  }
+  
   ngOnInit(): void {
     this.fetchDirs();
   }

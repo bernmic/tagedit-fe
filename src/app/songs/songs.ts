@@ -192,19 +192,6 @@ export class Songs implements OnInit {
     this.songsService.updateSongList(this.songList).subscribe(() => console.log('Successfully updated'));
   }
 
-  formatTags(song: Song): string {
-    if (song.has_id3_v1 && song.has_id3_v2) {
-      return "id3v1, id3v2";
-    }
-    if (song.has_id3_v1) {
-      return "id3v1";
-    }
-    if (song.has_id3_v2) {
-      return "id3v2";
-    }
-    return "-";
-  }
-
   @HostListener('window:keydown.control.a', ['$event'])
   selectAll(event: Event) {
     event.preventDefault();
