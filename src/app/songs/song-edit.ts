@@ -54,6 +54,7 @@ export class SongEditDialog implements OnInit {
     } else {
       this.cover = undefined;
     }
+    utils.parse("%n. %t", this.song())
   }
 
   onCancelClick(): void {

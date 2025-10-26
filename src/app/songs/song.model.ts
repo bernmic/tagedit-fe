@@ -10,6 +10,7 @@ export class Song {
     public path: string,
     public title: string,
     public artist: string,
+    public album_artist: string,
     public album: string,
     public genre: string,
     public track: string,
