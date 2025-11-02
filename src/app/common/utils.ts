@@ -22,20 +22,58 @@ export class utils {
     return (""+num).padStart(size, '0');
   }
 
-  static rename(pattern: string, song: Song) {
-    let p = song.path.replace("%n", song.track)
-    p = p.replace("%a", song.track);
-    p = p.replace("%A", song.track);
-    p = p.replace("%b", song.track);
-    p = p.replace("%t", song.track);
-    p = p.replace("%g", song.track);
-    p = p.replace("%y", song.track);
-    p = p.replace("%m", song.track);
-    p = this.sanitizePath(p);
-    if (p != song.path) {
-      song.new_name = p;
+  static capitalize(s: string): string {
+    let splitStr = s.toLowerCase().split(' ');
+    for (let i = 0; i < splitStr.length; i++) {
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    return splitStr.join(' ');
+  }
+
+  static capitalizeFilename(path: string): string {
+    let fn = utils.removeExtension(utils.extractFilename(path));
+    let p = utils.removeFilename(path);
+    let ext = utils.extractExtension(path);
+    return `${p}/${utils.capitalize(fn)}${ext}`;
+  }
+
+  static filenameRemoveUnderscores(path: string): string {
+    let fn = utils.extractFilename(path);
+    let p = utils.removeFilename(path);
+    fn = fn.replaceAll("_", " ");
+    return `${p}/${fn}`;
+  }
+
+  static capitalizeSong(song: Song): Song {
+    let songClone = structuredClone(song);
+    song.title = utils.capitalize(song.title);
+    song.artist = utils.capitalize(song.artist);
+    song.album = utils.capitalize(song.album);
+    if (song.title !== songClone.title || song.artist !== songClone.artist || song.album !== songClone.album) {
       song.changed = true;
     }
+    return song;
+  }
+
+  static rename(pattern: string, song: Song): string {
+    let p = pattern;
+    p = p.replace("%n", utils.sanitizeTrack(song));
+    p = p.replace("%a", song.artist);
+    p = p.replace("%A", song.album_artist);
+    p = p.replace("%b", song.album);
+    p = p.replace("%t", song.title);
+    p = p.replace("%g", song.genre);
+    p = p.replace("%y", song.year);
+    p = p.replace("%m", song.disc);
+    p = utils.sanitizePath(p);
+    return p;
+  }
+
+  static sanitizeTrack(song:Song): string {
+    if (song.track) {
+      return song.track.split("/")[0].padStart(2, '0');
+    }
+    return "";
   }
 
   static parse(pattern: string, song: Song) {

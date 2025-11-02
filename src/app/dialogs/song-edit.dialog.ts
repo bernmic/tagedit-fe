@@ -11,7 +11,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {Song} from './song.model';
+import {Song} from '../songs/song.model';
 import {utils} from '../common/utils';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -24,8 +24,8 @@ export interface SongData {
 
 @Component({
   selector: 'song-dialog',
-  templateUrl: 'song-edit.html',
-  styleUrls: ['song-edit.scss'],
+  templateUrl: './song-edit.dialog.html',
+  styleUrls: ['./song-edit.dialog.scss'],
   imports: [
     DurationPipe,
     FormsModule,

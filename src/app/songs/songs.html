@@ -20,8 +20,17 @@
     <button matIconButton aria-label="Remove id3v2 icon" matTooltip="Remove id3v2 tag from selected files" (click)="removeid3v2()" disabled="{{this.selection.selected.length === 0}}">
       <mat-icon>looks_two</mat-icon>
     </button>
-    <button matIconButton aria-label="Rename icon" matTooltip="Rename selected files" (click)="renameSelected()" disabled="{{this.selection.selected.length === 0}}">
+    <button matIconButton aria-label="Rename icon" matTooltip="Rename selected files" (click)="openRenameDialog()" disabled="{{this.selection.selected.length === 0}}">
       <mat-icon>drive_file_move</mat-icon>
+    </button>
+    <button matIconButton aria-label="titlecase filename icon" matTooltip="Titlecase filenames of selected files" (click)="titlecaseFilenameSelected()" disabled="{{this.selection.selected.length === 0}}">
+      <mat-icon>titlecase</mat-icon>
+    </button>
+    <button matIconButton aria-label="remove underscore from filename icon" matTooltip="Remove underscores from filename of selected files" (click)="removeUnderscoreFilenameSelected()" disabled="{{this.selection.selected.length === 0}}">
+      <mat-icon>space_bar</mat-icon>
+    </button>
+    <button matIconButton aria-label="titlecase tags icon" matTooltip="Titlecase tags of selected files" (click)="titlecaseSongSelected()" disabled="{{this.selection.selected.length === 0}}">
+      <mat-icon>titlecase</mat-icon>
     </button>
   </mat-toolbar>
   <mat-divider></mat-divider>

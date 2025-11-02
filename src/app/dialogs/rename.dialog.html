@@ -1,0 +1,26 @@
+<div class="form-container">
+  <span mat-dialog-title class="dialog-title">Rename song(s)</span>
+  <mat-divider></mat-divider>
+  <mat-dialog-content>
+    <mat-form-field class="fullwidth">
+      <mat-label>Pattern</mat-label>
+      <input #patternInput matInput [(ngModel)]="renamePattern" />
+    </mat-form-field>
+    <mat-chip-set aria-label="variable">
+      <mat-chip>%n - Track</mat-chip>
+      <mat-chip>%a - Artist</mat-chip>
+      <mat-chip>%t - Title</mat-chip>
+      <mat-chip>%A - AlbumArtist</mat-chip>
+      <mat-chip>%b - Album</mat-chip>
+      <mat-chip>%g - Genre</mat-chip>
+      <mat-chip>%y - Year</mat-chip>
+      <mat-chip>%m - Disc</mat-chip>
+    </mat-chip-set>
+    <mat-divider></mat-divider>
+    <p>Example: {{exampleRename}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton (click)="onCancelClick()">Cancel</button>
+    <button matButton (click)="onOkClick()" cdkFocusInitial>Ok</button>
+  </mat-dialog-actions>
+</div>

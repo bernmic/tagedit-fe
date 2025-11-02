@@ -14,12 +14,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {LocalStorageService} from '../common/localstorage.service';
 import {MatSort, MatSortModule} from '@angular/material/sort';
-import {SongEditDialog} from './song-edit';
+import {SongEditDialog} from '../dialogs/song-edit.dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {utils} from '../common/utils';
-import {catchError} from 'rxjs';
 import {BreadcrumbComponent} from '../common/breadcrumb';
+import {RenameDialog} from '../dialogs/rename.dialog';
 
 @Component({
   selector: 'app-songs',
@@ -167,6 +167,47 @@ export class Songs implements OnInit {
     })
   }
 
+  titlecaseFilenameSelected(): void {
+    this.selection.selected.forEach((song) => {
+      let newPath = this.capitalizeFilename(song.new_name ? song.new_name : song.path);
+      if (newPath !== song.path) {
+        song.new_name = newPath;
+        song.displayPath = this.extractFilename(newPath);
+        song.changed = true;
+      }
+    });
+  }
+
+  titlecaseSongSelected(): void {
+    this.selection.selected.forEach((song) => {
+      this.capitalizeSong(song);
+    });
+  }
+
+  removeUnderscoreFilenameSelected(): void {
+    this.selection.selected.forEach((song) => {
+      let newPath = this.filenameRemoveUnderscores(song.new_name ? song.new_name : song.path);
+      if (newPath !== song.path) {
+        song.new_name = newPath;
+        song.displayPath = this.extractFilename(newPath);
+        song.changed = true;
+      }
+    });
+  }
+
+  openRenameDialog(): void {
+    const dialogRef = this.dialog.open(RenameDialog, {
+      data: {renamePattern: "%n - %a - %t", songs: this.selection.selected}, width: '50vw', maxWidth: '50vw'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        console.log('The dialog was closed with result ');
+        console.log(result);
+      }
+    });
+  }
+
   openSongEditDialog(song: Song): void {
     let clone = structuredClone<Song>(song);
     const dialogRef = this.dialog.open(SongEditDialog, {
@@ -202,4 +243,7 @@ export class Songs implements OnInit {
   removeFilename = utils.removeFilename;
   extractExtension = utils.extractExtension;
   pad = utils.pad;
+  capitalizeFilename = utils.capitalizeFilename;
+  capitalizeSong = utils.capitalizeSong;
+  filenameRemoveUnderscores = utils.filenameRemoveUnderscores;
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SongEdit } from './song-edit';
+import {SongEditDialog} from './song-edit.dialog';
 
-describe('SongEdit', () => {
-  let component: SongEdit;
-  let fixture: ComponentFixture<SongEdit>;
+describe('SongEditDialog', () => {
+  let component: SongEditDialog;
+  let fixture: ComponentFixture<SongEditDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SongEdit]
+      imports: [SongEditDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SongEdit);
+    fixture = TestBed.createComponent(SongEditDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
