@@ -118,7 +118,10 @@ export class Songs implements OnInit {
         item.changes = SongChanges.fromSong(item);
       }
       item.changes.track = (""+trackNo++).padStart(2, '0');
-      item.changed = true;
+      if (item.track !== item.changes.track) {
+        item.changes.trackChanged = true;
+        item.changed = true;
+      }
     })
   }
 
@@ -226,6 +229,40 @@ export class Songs implements OnInit {
       return song.title;
     }
     return song.changes.titleChanged  ? song.changes.title! : song.title;
+  }
+
+  songArtist(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.artist;
+    }
+    return song.changes.artistChanged  ? song.changes.artist! : song.artist;
+  }
+
+  songAlbum(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.album;
+    }
+    return song.changes.albumChanged  ? song.changes.album! : song.album;
+  }
+
+  songAlbumArtist(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.album_artist;
+    }
+    return song.changes.albumArtistChanged  ? song.changes.album_artist! : song.album_artist;
+  }
+
+  songTrack(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.track;
+    }
+    return song.changes.trackChanged  ? song.changes.track! : song.track;
+  }
+  songGenre(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.genre;
+    }
+    return song.changes.genreChanged  ? song.changes.genre! : song.genre;
   }
 
   songYear(song: Song): string {

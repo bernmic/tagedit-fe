@@ -63,35 +63,35 @@
       <th mat-header-cell *matHeaderCellDef class="header-container" mat-sort-header sortActionDescription="sort by title">
         <span class="header-item">Title </span>
       </th>
-      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.title}}</td>
+      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{songTitle(element)}}</td>
     </ng-container>
 
     <ng-container matColumnDef="artist">
       <th mat-header-cell *matHeaderCellDef class="header-container" mat-sort-header sortActionDescription="sort by artist">
         <span class="header-item">Artist </span>
       </th>
-      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.artist}}</td>
+      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{songArtist(element)}}</td>
     </ng-container>
 
     <ng-container matColumnDef="album">
       <th mat-header-cell *matHeaderCellDef class="header-container" mat-sort-header sortActionDescription="sort by album">
         <span class="header-item">Album </span>
       </th>
-      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.album}}</td>
+      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{songAlbum(element)}}</td>
     </ng-container>
 
     <ng-container matColumnDef="track">
       <th mat-header-cell *matHeaderCellDef class="header-container" mat-sort-header sortActionDescription="sort by track">
         <span class="header-item">Track </span>
       </th>
-      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.track}}</td>
+      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{songTrack(element)}}</td>
     </ng-container>
 
     <ng-container matColumnDef="genre">
       <th mat-header-cell *matHeaderCellDef class="header-container" mat-sort-header sortActionDescription="sort by genre">
         <span class="header-item">Genre </span>
       </th>
-      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{element.genre}}</td>
+      <td mat-cell *matCellDef="let element" class="changed-{{element.changed}}" [class.dark]="themeService.darkMode">{{songGenre(element)}}</td>
     </ng-container>
 
     <ng-container matColumnDef="year">
