@@ -1,4 +1,4 @@
-import {Song} from '../songs/song.model';
+import {Song, SongChanges} from '../songs/song.model';
 
 export class utils {
   static extractFilename(path: string): string {
@@ -45,11 +45,35 @@ export class utils {
   }
 
   static capitalizeSong(song: Song): Song {
-    let songClone = structuredClone(song);
-    song.title = utils.capitalize(song.title);
-    song.artist = utils.capitalize(song.artist);
-    song.album = utils.capitalize(song.album);
-    if (song.title !== songClone.title || song.artist !== songClone.artist || song.album !== songClone.album) {
+    let songClone = SongChanges.fromSong(song);
+    songClone.title = utils.capitalize(song.title);
+    songClone.artist = utils.capitalize(song.artist);
+    songClone.album = utils.capitalize(song.album);
+    songClone.album_artist = utils.capitalize(song.album_artist);
+    songClone.genre = utils.capitalize(song.genre);
+    if (song.title !== songClone.title) {
+      songClone.titleChanged = true;
+      song.changes = songClone;
+      song.changed = true;
+    }
+    if (song.artist !== songClone.artist) {
+      songClone.artistChanged = true;
+      song.changes = songClone;
+      song.changed = true;
+    }
+    if (song.album !== songClone.album) {
+      songClone.albumChanged = true;
+      song.changes = songClone;
+      song.changed = true;
+    }
+    if (song.genre !== songClone.genre) {
+      songClone.genreChanged = true;
+      song.changes = songClone;
+      song.changed = true;
+    }
+    if (song.album_artist !== songClone.album_artist) {
+      songClone.albumArtistChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
     return song;
@@ -84,7 +108,7 @@ export class utils {
     filename = this.removeExtension(filename);
     pattern = pattern.replaceAll("%", "%#");
     let parts = pattern.split("%");
-    let changes = structuredClone(song);
+    let songClone = SongChanges.fromSong(song);
 
     for (let part of parts) {
       if (!part.startsWith("#") || part.length == 1) {
@@ -104,28 +128,28 @@ export class utils {
       if (cutpos >= 0) {
         switch (t) {
           case 'n':
-            changes.track = filename.substring(0, cutpos);
+            songClone.track = filename.substring(0, cutpos);
             break;
           case 'a':
-            changes.artist = filename.substring(0, cutpos);
+            songClone.artist = filename.substring(0, cutpos);
             break;
           case 'b':
-            changes.album = filename.substring(0, cutpos);
+            songClone.album = filename.substring(0, cutpos);
             break;
           case 'A':
-            changes.album_artist = filename.substring(0, cutpos);
+            songClone.album_artist = filename.substring(0, cutpos);
             break;
           case 't':
-            changes.title = filename.substring(0, cutpos);
+            songClone.title = filename.substring(0, cutpos);
             break;
           case 'g':
-            changes.genre = filename.substring(0, cutpos);
+            songClone.genre = filename.substring(0, cutpos);
             break;
           case 'y':
-            changes.year = filename.substring(0, cutpos);
+            songClone.year = filename.substring(0, cutpos);
             break;
           case 'm':
-            changes.disc = filename.substring(0, cutpos);
+            songClone.disc = filename.substring(0, cutpos);
             break;
         }
         filename = filename.substring(cutpos);
@@ -139,38 +163,44 @@ export class utils {
         break;
       }
     }
-    if (song.track !== changes.track) {
-      console.log(`changed track from ${song.track} to ${changes.track}`);
-      song.track = changes.track;
+    if (song.title !== songClone.title) {
+      songClone.titleChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.title !== changes.title) {
-      console.log(`changed title from ${song.track} to ${changes.title}`);
-      song.title = changes.title;
+    if (song.artist !== songClone.artist) {
+      songClone.artistChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.artist !== changes.artist) {
-      song.artist = changes.artist;
+    if (song.album !== songClone.album) {
+      songClone.albumChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.album !== changes.album) {
-      song.album = changes.album;
+    if (song.genre !== songClone.genre) {
+      songClone.genreChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.album_artist !== changes.album_artist) {
-      song.album_artist = changes.album_artist;
+    if (song.album_artist !== songClone.album_artist) {
+      songClone.albumArtistChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.genre !== changes.genre) {
-      song.genre = changes.genre;
+    if (song.track !== songClone.track) {
+      songClone.trackChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.year !== changes.year) {
-      song.year = changes.year;
+    if (song.year !== songClone.year) {
+      songClone.yearChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
-    if (song.disc !== changes.disc) {
-      song.disc = changes.disc;
+    if (song.disc !== songClone.disc) {
+      songClone.discChanged = true;
+      song.changes = songClone;
       song.changed = true;
     }
   }

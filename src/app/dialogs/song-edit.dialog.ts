@@ -6,12 +6,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {Song} from '../songs/song.model';
+import {Song, SongChanges} from '../songs/song.model';
 import {utils} from '../common/utils';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -33,7 +32,6 @@ export interface SongData {
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatDividerModule,
     MatFormFieldModule,
     MatGridListModule,
@@ -54,12 +52,65 @@ export class SongEditDialog implements OnInit {
     } else {
       this.cover = undefined;
     }
-    utils.parse("%n. %t", this.song())
+    if (this.song().changes === null || this.song().changes === undefined) {
+      this.song().changes = SongChanges.fromSong(this.song())
+    }
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
   }
 
+  onOkClick(): void {
+    if (this.song().title !== this.song().changes!.title) {
+      this.song().changes!.titleChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().artist !== this.song().changes!.artist) {
+      this.song().changes!.artistChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().album !== this.song().changes!.album) {
+      this.song().changes!.albumChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().album_artist !== this.song().changes!.album_artist) {
+      this.song().changes!.albumArtistChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().track !== this.song().changes!.track) {
+      this.song().changes!.trackChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().genre !== this.song().changes!.genre) {
+      this.song().changes!.genreChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().year !== this.song().changes!.year) {
+      this.song().changes!.yearChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().disc !== this.song().changes!.disc) {
+      this.song().changes!.discChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().composer !== this.song().changes!.composer) {
+      this.song().changes!.composerChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().comment !== this.song().changes!.comment) {
+      this.song().changes!.commentChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().lyrics !== this.song().changes!.lyrics) {
+      this.song().changes!.lyricsChanged = true;
+      this.song().changed = true;
+    }
+    if (this.song().cover !== this.song().changes!.cover) {
+      this.song().changes!.coverChanged = true;
+      this.song().changed = true;
+    }
+    this.dialogRef.close(this.song());
+  }
   extractFilename = utils.extractFilename;
 }

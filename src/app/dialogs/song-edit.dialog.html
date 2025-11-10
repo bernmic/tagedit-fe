@@ -5,39 +5,39 @@
     <div class="left-container">
     <mat-form-field class="fullwidth">
       <mat-label>Title</mat-label>
-      <input matInput [(ngModel)]="song().title" />
+      <input matInput [(ngModel)]="song().changes!.title" />
     </mat-form-field>
     <mat-form-field class="fullwidth">
       <mat-label>Artist</mat-label>
-      <input matInput [(ngModel)]="song().artist" />
+      <input matInput [(ngModel)]="song().changes!.artist" />
     </mat-form-field>
     <mat-form-field class="fullwidth">
       <mat-label>Album</mat-label>
-      <input matInput [(ngModel)]="song().album" />
+      <input matInput [(ngModel)]="song().changes!.album" />
     </mat-form-field>
     <mat-form-field class="halfwidth-left">
       <mat-label>Track</mat-label>
-      <input matInput [(ngModel)]="song().track" />
+      <input matInput [(ngModel)]="song().changes!.track" />
     </mat-form-field>
     <mat-form-field class="halfwidth-right">
       <mat-label>Year</mat-label>
-      <input matInput [(ngModel)]="song().year" />
+      <input matInput [(ngModel)]="song().changes!.year" />
     </mat-form-field>
     <mat-form-field class="fullwidth">
       <mat-label>Genre</mat-label>
-      <input matInput [(ngModel)]="song().genre" />
+      <input matInput [(ngModel)]="song().changes!.genre" />
     </mat-form-field>
     <mat-form-field class="fullwidth">
       <mat-label>Composer</mat-label>
-      <input matInput [(ngModel)]="song().composer" />
+      <input matInput [(ngModel)]="song().changes!.composer" />
     </mat-form-field>
     <mat-form-field class="fullwidth">
       <mat-label>Comment</mat-label>
-      <textarea matInput [(ngModel)]="song().comment"></textarea>
+      <textarea matInput [(ngModel)]="song().changes!.comment"></textarea>
     </mat-form-field>
     <mat-form-field class="fullwidth">
       <mat-label>Lyrics</mat-label>
-      <textarea matInput [(ngModel)]="song().lyrics"></textarea>
+      <textarea matInput [(ngModel)]="song().changes!.lyrics"></textarea>
     </mat-form-field>
     </div>
     <div class="right-container">
@@ -58,6 +58,6 @@
   </mat-dialog-content>
 <mat-dialog-actions>
     <button matButton (click)="onCancelClick()">Cancel</button>
-    <button matButton [mat-dialog-close]="song()" cdkFocusInitial>Ok</button>
+    <button matButton (click)="onOkClick()" cdkFocusInitial>Ok</button>
   </mat-dialog-actions>
 </div>

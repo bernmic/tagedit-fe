@@ -1,6 +1,6 @@
 import {Component, effect, HostListener, inject, OnInit, ViewChild} from '@angular/core';
 import {SongsService} from './song.service';
-import {Song, SongList} from './song.model';
+import {Song, SongChanges, SongList} from './song.model';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -114,15 +114,23 @@ export class Songs implements OnInit {
     this.dataSource.sortData(this.selection.selected, this.sort);
     let trackNo = 1;
     this.selection.selected.forEach((item) => {
-      item.track = (""+trackNo++).padStart(2, '0');
+      if (item.changes === null || item.changes === undefined) {
+        item.changes = SongChanges.fromSong(item);
+      }
+      item.changes.track = (""+trackNo++).padStart(2, '0');
       item.changed = true;
     })
   }
 
   uncommentSelected(): void {
     this.selection.selected.forEach((item) => {
-      item.comment = "";
-      item.changed = true;
+      if (item.comment !== "") {
+        if (item.changes === null || item.changes === undefined) {
+          item.changes = SongChanges.fromSong(item);
+        }
+        item.changes.comment = "";
+        item.changed = true;
+      }
     })
   }
 
@@ -140,29 +148,6 @@ export class Songs implements OnInit {
       if (item.has_id3_v2) {
         item.remove_id3v2 = true;
         item.changed = true;
-      }
-    })
-  }
-
-  renameSelected(): void {
-    this.selection.selected.forEach((item) => {
-      // @ts-ignore
-      let tpl = this.localStorageService.get('renameMask');
-      if (tpl === null) {
-        tpl = "{track} - {artist} - {title}";
-      }
-      tpl = tpl.replace("{track}", item.track.padStart(2, '0'));
-      tpl = tpl.replace("{artist}", item.artist);
-      tpl = tpl.replace("{album}", item.album);
-      tpl = tpl.replace("{title}", item.title);
-      tpl = tpl.replace("{title}", item.title);
-      tpl = tpl.replace("{year}", item.year);
-      let path = this.removeFilename(item.path);
-      let ext = this.extractExtension(item.path);
-      tpl = path + "/" + tpl + ext;
-      if (tpl !== item.path) {
-        item.changed = true;
-        item.new_name = tpl;
       }
     })
   }
@@ -209,7 +194,6 @@ export class Songs implements OnInit {
   }
 
   openSongEditDialog(song: Song): void {
-    let clone = structuredClone<Song>(song);
     const dialogRef = this.dialog.open(SongEditDialog, {
       data: {song: song}, width: '80vw', minWidth: '80vw'
     });
@@ -217,8 +201,6 @@ export class Songs implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
-        if (!this.compareSongs(song, clone))
-          song.changed = true;
         console.log('The dialog was closed with result ');
         console.log(result);
       }
@@ -230,7 +212,27 @@ export class Songs implements OnInit {
   }
 
   saveSongs(): void {
-    this.songsService.updateSongList(this.songList).subscribe(() => console.log('Successfully updated'));
+    this.songsService.updateSongList(this.songList).subscribe(() => {
+      console.log('Successfully updated');
+      // remove all changed flags
+      this.songList.songs.forEach(song => {
+        song.changed = false;
+      });
+    });
+  }
+
+  songTitle(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.title;
+    }
+    return song.changes.titleChanged  ? song.changes.title! : song.title;
+  }
+
+  songYear(song: Song): string {
+    if (song.changes === null || song.changes === undefined) {
+      return song.year;
+    }
+    return song.changes.yearChanged  ? song.changes.year! : song.year;
   }
 
   @HostListener('window:keydown.control.a', ['$event'])
