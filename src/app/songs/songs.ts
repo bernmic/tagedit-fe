@@ -5,7 +5,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {ThemeService} from '../common/theme.service';
-import {CommonModule} from '@angular/common';
+
 import {DirectoriesService} from '../directories/directories.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -24,7 +24,6 @@ import {RenameDialog} from '../dialogs/rename.dialog';
 @Component({
   selector: 'app-songs',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
@@ -34,8 +33,8 @@ import {RenameDialog} from '../dialogs/rename.dialog';
     MatTableModule,
     MatToolbarModule,
     MatTooltipModule,
-    BreadcrumbComponent,
-  ],
+    BreadcrumbComponent
+],
   templateUrl: './songs.html',
   styleUrl: './songs.scss'
 })

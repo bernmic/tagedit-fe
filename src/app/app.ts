@@ -6,7 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
-import {CommonModule} from '@angular/common';
+
 import {ThemeService} from './common/theme.service';
 import {Directories} from './directories/directories';
 import {SysInfo, SysInfoService} from './common/sysinfo.service';
@@ -14,7 +14,6 @@ import {SysInfo, SysInfoService} from './common/sysinfo.service';
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
     MatListModule,
@@ -22,8 +21,8 @@ import {SysInfo, SysInfoService} from './common/sysinfo.service';
     MatSidenavModule,
     MatToolbarModule,
     RouterOutlet,
-    Directories,
-  ],
+    Directories
+],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
